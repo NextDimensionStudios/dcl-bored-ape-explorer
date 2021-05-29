@@ -14,11 +14,22 @@ const tokenId = '6988';
 const contractAddress = '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d';
 const nftUri = 'ethereum://' + contractAddress + '/' + tokenId;
 
+//------ Case ------//
+const nftCase = new Entity();
+nftCase.addComponent(new GLTFShape('models/BoredApeExplorerCase.glb'));
+nftCase.addComponent(
+  new Transform({
+    position: new Vector3(8, 0, 8)
+  })
+);
+engine.addEntity(nftCase);
+
+//------ NFT Display ------//
 const apeNft = new Entity();
 apeNft.addComponent(new NFTShape(nftUri));
 apeNft.addComponent(
   new Transform({
-    position: new Vector3(4.5, 3, 8),
+    position: new Vector3(4.75, 2.9, 8),
     scale: new Vector3(6, 6, 6)
   })
 );
@@ -62,7 +73,7 @@ function ConfigureTraitDisplay(json: any) {
   engine.addEntity(serialDisplay);
 
   //------ Add Traits ------//
-  let traitPosition = new Vector3(0.4, 0.05, 0);
+  let traitPosition = new Vector3(0.375, 0.05, 0);
   let deltaX = 0;
   let deltaY = 0;
   let index = 0;
