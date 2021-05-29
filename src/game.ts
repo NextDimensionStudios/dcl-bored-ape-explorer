@@ -15,7 +15,7 @@ const apeNft = new Entity();
 apeNft.addComponent(new NFTShape(nftUri));
 apeNft.addComponent(
   new Transform({
-    position: new Vector3(5, 2.5, 8),
+    position: new Vector3(4.5, 2.75, 8),
     scale: new Vector3(6, 6, 6)
   })
 );
