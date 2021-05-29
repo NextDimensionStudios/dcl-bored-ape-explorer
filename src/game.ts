@@ -9,13 +9,16 @@ baseScene.addComponent(
 engine.addEntity(baseScene);
 
 //------ Ape Display ------//
-const nftUri = 'ethereum://0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/3871';
-const apeNft = new Entity();
+const url = 'https://api.opensea.io/api/v1/assets';
+const tokenId = '6988';
+const contractAddress = '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d';
+const nftUri = 'ethereum://' + contractAddress + '/' + tokenId;
 
+const apeNft = new Entity();
 apeNft.addComponent(new NFTShape(nftUri));
 apeNft.addComponent(
   new Transform({
-    position: new Vector3(4.5, 2.75, 8),
+    position: new Vector3(4.5, 3, 8),
     scale: new Vector3(6, 6, 6)
   })
 );
@@ -30,11 +33,6 @@ apeNft.addComponent(
 
 engine.addEntity(apeNft);
 
-//------ Ape Traits ------/
-const url = 'https://api.opensea.io/api/v1/assets';
-const tokenId = '6988';
-const contractAddress = '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d';
-
 executeTask(async () => {
   try {
     let response = await fetch(
@@ -48,7 +46,23 @@ executeTask(async () => {
 });
 
 function ConfigureTraitDisplay(json: any) {
-  let traitPosition = new Vector3(0.4, 0.15, 0);
+  //------ Add Serial # ------//
+  const serial = new TextShape('#' + tokenId);
+  serial.color = Color3.Black();
+  serial.font = new Font(Fonts.SanFrancisco_Heavy);
+
+  const serialDisplay = new Entity();
+  serialDisplay.addComponent(serial);
+  serialDisplay.addComponent(
+    new Transform({
+      position: new Vector3(9.5, 4, 8),
+      scale: new Vector3(0.5, 0.5, 0.5)
+    })
+  );
+  engine.addEntity(serialDisplay);
+
+  //------ Add Traits ------//
+  let traitPosition = new Vector3(0.4, 0.05, 0);
   let deltaX = 0;
   let deltaY = 0;
   let index = 0;
@@ -88,7 +102,7 @@ function ConfigureTraitDisplay(json: any) {
     deltaX += 0.3;
     if (index % 4 == 0) {
       deltaX = 0;
-      deltaY -= 0.25;
+      deltaY -= 0.18;
     }
   }
 }
